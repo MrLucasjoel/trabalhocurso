@@ -54,7 +54,10 @@ class _EsquesenhaViewState extends State<EsquesenhaView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Recuperar Senha')),
+      backgroundColor: Colors.greenAccent,
+      appBar: AppBar(title: const Text('Recuperar Senha'),
+        backgroundColor: Colors.greenAccent,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -63,9 +66,17 @@ class _EsquesenhaViewState extends State<EsquesenhaView> {
             children: [
               TextFormField(
                 controller: controller.emailController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Email',
                   prefixIcon: Icon(Icons.email),
+                  // Define a borda fechada ao redor do campo
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),  // Borda arredondada
+                    borderSide: const BorderSide(
+                      color: Colors.black,  // Cor da borda
+                      width: 2,  // Largura da borda
+                    ),
+                  ),
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -101,12 +112,28 @@ class _EsquesenhaViewState extends State<EsquesenhaView> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _loading ? null : _sendRecovery,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _loading ? Colors.grey : Colors.teal,  // Cor do fundo (alterando quando está carregando)
+                      shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),  // Bordas arredondadas
+                    ),
+                      side: BorderSide(
+                        color: Colors.black,
+                        // Cor da borda, caso queira uma borda visível
+                        width: 2,
+                      ),
+                  ),
                   child: _loading
                       ? const CircularProgressIndicator(
-                    color: Colors.white,
+                    color: Colors.teal,
                     strokeWidth: 2,
                   )
-                      : const Text('Enviar email de recuperação'),
+                      : const Text('Enviar email de recuperação',
+                        style: TextStyle(
+                          fontSize: 16,  // Tamanho da fonte
+                            color: Colors.black,  // Cor do texto
+                    ),
+                  ),
                 ),
               ),
             ],

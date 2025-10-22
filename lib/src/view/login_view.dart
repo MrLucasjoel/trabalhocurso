@@ -35,8 +35,10 @@ class _LoginViewState extends State<LoginView> {
       // Simulação de login assíncrono
       await Future.delayed(const Duration(seconds: 2));
 
+      //
       // Aqui você pode chamar a lógica real do loginController.login,
       // que pode retornar sucesso ou erro (ajuste conforme seu controller)
+      //
       final sucesso = user.username == 'admin' && user.password == '123456';
 
       if (sucesso) {
@@ -64,8 +66,10 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.greenAccent,
       appBar: AppBar(
-        title: const Text('Login'),
+          backgroundColor: Colors.greenAccent,
+          title: const Text('Login')
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -73,10 +77,46 @@ class _LoginViewState extends State<LoginView> {
           key: loginController.formKey,
           child: Column(
             children: [
+              const Icon(
+                Icons.account_box,
+                size: 180,
+                color: Colors.teal,
+              ),
+              const SizedBox(height: 30),
+              Text(
+                'CampMine',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 28,
+                ),
+              ),
+              const SizedBox(height: 15),
+              Text(
+                "Bem-vindo",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 28,
+                ),
+              ),
+              const SizedBox(height: 15),
               // Campo usuário
               TextFormField(
                 controller: loginController.usernameController,
                 decoration: InputDecoration(
+                  errorStyle: TextStyle(
+                    fontSize: 15,
+                    color: Colors.red,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.red, width: 2.0
+                    ),
+                  ),
                   labelText: 'Usuário',
                   prefixIcon: const Icon(Icons.person),
                   enabledBorder: OutlineInputBorder(
@@ -102,11 +142,23 @@ class _LoginViewState extends State<LoginView> {
                 controller: loginController.passwordController,
                 obscureText: _obscurePassword,
                 decoration: InputDecoration(
+                  errorStyle: TextStyle(
+                    fontSize: 15,
+                    color: Colors.red,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.red, width: 2.0
+                    ),
+                  ),
                   labelText: 'Senha',
                   prefixIcon: const Icon(Icons.lock),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: Colors.black,
                     ),
                     onPressed: () {
@@ -149,23 +201,22 @@ class _LoginViewState extends State<LoginView> {
                 child: ElevatedButton(
                   onPressed: _loading ? null : _login,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white24,
+                    backgroundColor: _loading ? Colors.teal : Colors.teal,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                  ),
-                  child: _loading
-                      ? const CircularProgressIndicator(
-                    color: Colors.black,
-                    strokeWidth: 2,
-                  )
-                      : const Text(
-                    'Entrar',
-                    style: TextStyle(
-                      fontSize: 18,
+                    side: BorderSide(
                       color: Colors.black,
+                      // Cor da borda, caso queira uma borda visível
+                      width: 2,
                     ),
                   ),
+                  child: _loading
+                      ? const CircularProgressIndicator(strokeWidth: 2)
+                      : const Text(
+                          'Entrar',
+                          style: TextStyle(fontSize: 18, color: Colors.black),
+                        ),
                 ),
               ),
               TextButton(
@@ -175,7 +226,11 @@ class _LoginViewState extends State<LoginView> {
                     MaterialPageRoute(builder: (_) => const RegistroView()),
                   );
                 },
-                child: const Text('Registrar'),
+                child: const Text('Não tem Cadastro? Cadastre-se',
+                  style: TextStyle(
+                      color: Colors.black
+                  ),
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -184,7 +239,11 @@ class _LoginViewState extends State<LoginView> {
                     MaterialPageRoute(builder: (_) => const EsquesenhaView()),
                   );
                 },
-                child: const Text('Esqueceu a senha?'),
+                child: const Text('Esqueceu a senha?',
+                  style: TextStyle(
+                      color: Colors.black
+                  ),
+                ),
               ),
             ],
           ),

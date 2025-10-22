@@ -62,7 +62,10 @@ class _RegistroViewState extends State<RegistroView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Registrar')),
+      backgroundColor: Colors.greenAccent,
+      appBar: AppBar(title: const Text('Registrar'),
+        backgroundColor: Colors.greenAccent,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -71,9 +74,16 @@ class _RegistroViewState extends State<RegistroView> {
             children: [
               TextFormField(
                 controller: controller.usernameController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Usuário',
                   prefixIcon: Icon(Icons.person),
+                  border: OutlineInputBorder( // Define a borda do campo
+                    borderRadius: BorderRadius.circular(12), // Borda com bordas arredondadas
+                    borderSide: BorderSide(
+                      color: Colors.black, // Cor da borda
+                      width: 2, // Largura da borda
+                    ),
+                  ),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Digite seu usuário';
@@ -83,9 +93,16 @@ class _RegistroViewState extends State<RegistroView> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: controller.emailController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Email',
                   prefixIcon: Icon(Icons.email),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                      width: 2,
+                    ),
+                  ),
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -101,6 +118,13 @@ class _RegistroViewState extends State<RegistroView> {
                 decoration: InputDecoration(
                   labelText: 'Senha',
                   prefixIcon: const Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                        width: 2,
+                        ),
+                      ),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscurePassword ? Icons.visibility_off : Icons.visibility,
@@ -125,6 +149,13 @@ class _RegistroViewState extends State<RegistroView> {
                 decoration: InputDecoration(
                   labelText: 'Confirmar senha',
                   prefixIcon: const Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                        width: 2,
+                        ),
+                      ),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
@@ -157,12 +188,29 @@ class _RegistroViewState extends State<RegistroView> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: _loading ? null : _register,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: _loading ? Colors.grey : Colors.teal, // Cor do fundo (botão)
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12), // Bordas arredondadas
+                    ),
+                    side: BorderSide(
+                      color: Colors.black,
+                      // Cor da borda, caso queira uma borda visível
+                      width: 2,
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20), // Padding para aumentar a largura do botão
+                  ),
                   child: _loading
                       ? const CircularProgressIndicator(
-                    color: Colors.white,
+                    color: Colors.teal,
                     strokeWidth: 2,
                   )
-                      : const Text('Registrar'),
+                      : const Text('Registrar',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black
+                    ),
+                  ),
                 ),
               ),
             ],
